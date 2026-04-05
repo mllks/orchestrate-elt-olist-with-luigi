@@ -1,0 +1,839 @@
+2026-04-05 21:16:49,986 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 21:16:50,086 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 21:16:50,269 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 21:16:50,326 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 21:16:50,692 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 21:16:50,716 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 21:16:51,251 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 21:16:51,914 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 21:16:52,299 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 21:16:52,780 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 21:16:52,780 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 21:16:52,782 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 21:16:52,790 - INFO - [pid 95924] Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) done      Extract()
+2026-04-05 21:16:52,791 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:16:52,791 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 21:16:52,791 - DEBUG - Asking scheduler for work...
+2026-04-05 21:16:52,792 - DEBUG - Pending tasks: 2
+2026-04-05 21:16:52,792 - INFO - [pid 95924] Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) running   Load()
+2026-04-05 21:16:52,794 - INFO - Read Load Query - SUCCESS
+2026-04-05 21:16:53,480 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 21:16:53,480 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:16:53,582 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 21:16:53,583 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 21:17:08,272 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 21:17:16,265 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 21:17:16,271 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 21:17:16,300 - INFO - [pid 95924] Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) done      Load()
+2026-04-05 21:17:16,300 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:17:16,301 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 21:17:16,301 - DEBUG - Asking scheduler for work...
+2026-04-05 21:17:16,301 - DEBUG - Pending tasks: 1
+2026-04-05 21:17:16,301 - INFO - [pid 95924] Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) running   Transform()
+2026-04-05 21:17:16,302 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:17:16,304 - INFO - Read Transform Query - SUCCESS
+2026-04-05 21:17:16,304 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 21:17:17,496 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 21:17:17,867 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 21:17:17,951 - INFO - Transform to 'final.dim_seller' - SUCCESS
+2026-04-05 21:17:25,450 - INFO - Transform to 'final.fct_order_delivery' - SUCCESS
+2026-04-05 21:17:32,100 - INFO - Transform to 'final.fct_order_item' - SUCCESS
+2026-04-05 21:17:35,509 - INFO - Transform to 'final.fct_order_payment' - SUCCESS
+2026-04-05 21:17:35,934 - ERROR - Transform to All Dimensions and Fact Tables - FAILED
+2026-04-05 21:17:35,939 - ERROR - Transform Tables - FAILED
+2026-04-05 21:17:35,939 - ERROR - [pid 95924] Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) failed    Transform()
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.CardinalityViolation: ON CONFLICT DO UPDATE command cannot affect row a second time
+HINT:  Ensure that no rows proposed for insertion within the same command have duplicate constrained values.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lilips/Documents/Project/pacmann/Part 6 Data Storage - Warehouse, Mart & Lake/orchestration-elt-olist-with-luigi/pipeline/transform.py", line 105, in run
+    session.execute(query)
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2200, in _execute_internal
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+           ^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.CardinalityViolation) ON CONFLICT DO UPDATE command cannot affect row a second time
+HINT:  Ensure that no rows proposed for insertion within the same command have duplicate constrained values.
+
+[SQL: /*
+ * Transform query for fct_order_reviews
+ * 
+ * This is a transaction fact table that captures review information for each order.
+ */
+
+INSERT INTO final.fct_order_reviews (
+    review_nk,
+    order_nk,
+    order_status,
+    review_score,
+    sentiment_score,
+    review_length_chars,
+    review_severity,
+    comment_status,
+    days_since_purchase,
+    review_date_id,
+    customer_id
+)
+SELECT 
+    oreview.review_id AS review_nk,
+    oreview.order_id AS order_nk,
+    o.order_status,
+    oreview.review_score,
+    -- Simple sentiment scoring based on review score
+    CASE 
+        WHEN oreview.review_score >= 4 THEN 1.0
+        WHEN oreview.review_score = 3 THEN 0.0
+        WHEN oreview.review_score <= 2 THEN -1.0
+        ELSE 0.0
+    END AS sentiment_score,
+    -- Review length calculation
+    COALESCE(LENGTH(oreview.review_comment_message), 0) AS review_length_chars,
+    -- Review severity based on score
+    CASE 
+        WHEN oreview.review_score <= 2 THEN 'Critical'
+        ELSE 'Standard'
+    END AS review_severity,
+    -- Comment status
+    CASE 
+        WHEN oreview.review_comment_message IS NOT NULL AND LENGTH(TRIM(oreview.review_comment_message)) > 0 
+        THEN 'Has Comment'
+        ELSE 'No Comment'
+    END AS comment_status,
+    -- Days since purchase calculation
+    CASE 
+        WHEN oreview.review_creation_date IS NOT NULL AND o.order_purchase_timestamp IS NOT NULL 
+        THEN EXTRACT(DAY FROM (TO_TIMESTAMP(oreview.review_creation_date, 'YYYY-MM-DD HH24:MI:SS') - 
+                               TO_TIMESTAMP(o.order_purchase_timestamp, 'YYYY-MM-DD HH24:MI:SS')))
+        ELSE NULL 
+    END AS days_since_purchase,
+    COALESCE(review_date_dim.date_id, -1) AS review_date_id,
+    dc.customer_id
+FROM stg.order_reviews oreview
+JOIN stg.orders o ON oreview.order_id = o.order_id
+JOIN stg.customers c ON o.customer_id = c.customer_id
+JOIN final.dim_customer dc ON c.customer_unique_id = dc.customer_nk AND dc.current_flag = 'Current'
+-- Date dimension join
+LEFT JOIN final.dim_date review_date_dim 
+    ON review_date_dim.date_actual = DATE(TO_TIMESTAMP(oreview.review_creation_date, 'YYYY-MM-DD HH24:MI:SS'))
+ON CONFLICT (review_nk) 
+DO UPDATE SET
+    order_nk = EXCLUDED.order_nk,
+    order_status = EXCLUDED.order_status,
+    review_score = EXCLUDED.review_score,
+    sentiment_score = EXCLUDED.sentiment_score,
+    review_length_chars = EXCLUDED.review_length_chars,
+    review_severity = EXCLUDED.review_severity,
+    comment_status = EXCLUDED.comment_status,
+    days_since_purchase = EXCLUDED.days_since_purchase,
+    review_date_id = EXCLUDED.review_date_id,
+    customer_id = EXCLUDED.customer_id,
+    updated_at = CURRENT_TIMESTAMP;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/luigi/worker.py", line 210, in run
+    new_deps = self._run_get_new_deps()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/luigi/worker.py", line 138, in _run_get_new_deps
+    task_gen = self.task.run()
+               ^^^^^^^^^^^^^^^
+  File "/Users/lilips/Documents/Project/pacmann/Part 6 Data Storage - Warehouse, Mart & Lake/orchestration-elt-olist-with-luigi/pipeline/transform.py", line 152, in run
+    raise Exception('Failed Transforming Tables')
+Exception: Failed Transforming Tables
+2026-04-05 21:17:35,950 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:17:35,952 - INFO - Informed scheduler that task   Transform__99914b932b   has status   FAILED
+2026-04-05 21:17:35,952 - DEBUG - Asking scheduler for work...
+2026-04-05 21:17:35,953 - DEBUG - Done
+2026-04-05 21:17:35,953 - DEBUG - There are no more tasks to run at this time
+2026-04-05 21:17:35,953 - DEBUG - There are 1 pending tasks possibly being run by other workers
+2026-04-05 21:17:35,953 - DEBUG - There are 1 pending tasks unique to this worker
+2026-04-05 21:17:35,953 - DEBUG - There are 1 pending tasks last scheduled by this worker
+2026-04-05 21:17:35,953 - INFO - Worker Worker(salt=7512059668, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=95924) was stopped. Shutting down Keep-Alive thread
+2026-04-05 21:17:35,953 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 2 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+* 1 failed:
+    - 1 Transform()
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2026-04-05 21:21:14,261 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 21:21:14,391 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 21:21:14,581 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 21:21:14,645 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 21:21:14,988 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 21:21:15,011 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 21:21:15,535 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 21:21:16,219 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 21:21:16,620 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 21:21:17,057 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 21:21:17,057 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 21:21:17,062 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 21:21:17,071 - INFO - [pid 9268] Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) done      Extract()
+2026-04-05 21:21:17,071 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:21:17,072 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 21:21:17,072 - DEBUG - Asking scheduler for work...
+2026-04-05 21:21:17,072 - DEBUG - Pending tasks: 2
+2026-04-05 21:21:17,072 - INFO - [pid 9268] Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) running   Load()
+2026-04-05 21:21:17,075 - INFO - Read Load Query - SUCCESS
+2026-04-05 21:21:17,797 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 21:21:17,797 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:21:17,920 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 21:21:17,920 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 21:21:37,950 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 21:21:46,946 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 21:21:46,953 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 21:21:47,019 - INFO - [pid 9268] Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) done      Load()
+2026-04-05 21:21:47,020 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:21:47,021 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 21:21:47,021 - DEBUG - Asking scheduler for work...
+2026-04-05 21:21:47,021 - DEBUG - Pending tasks: 1
+2026-04-05 21:21:47,021 - INFO - [pid 9268] Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) running   Transform()
+2026-04-05 21:21:47,022 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:21:47,024 - INFO - Read Transform Query - SUCCESS
+2026-04-05 21:21:47,024 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 21:21:48,498 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 21:21:48,869 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 21:21:48,974 - INFO - Transform to 'final.dim_seller' - SUCCESS
+2026-04-05 21:21:57,070 - INFO - Transform to 'final.fct_order_delivery' - SUCCESS
+2026-04-05 21:22:03,680 - INFO - Transform to 'final.fct_order_item' - SUCCESS
+2026-04-05 21:22:07,430 - INFO - Transform to 'final.fct_order_payment' - SUCCESS
+2026-04-05 21:22:07,433 - ERROR - Transform to All Dimensions and Fact Tables - FAILED
+2026-04-05 21:22:07,437 - ERROR - Transform Tables - FAILED
+2026-04-05 21:22:07,437 - ERROR - [pid 9268] Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) failed    Transform()
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.InvalidColumnReference: there is no unique or exclusion constraint matching the ON CONFLICT specification
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lilips/Documents/Project/pacmann/Part 6 Data Storage - Warehouse, Mart & Lake/orchestration-elt-olist-with-luigi/pipeline/transform.py", line 105, in run
+    session.execute(query)
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2200, in _execute_internal
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+           ^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/anaconda3/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.InvalidColumnReference) there is no unique or exclusion constraint matching the ON CONFLICT specification
+
+[SQL: /*
+ * Transform query for fct_order_reviews
+ * 
+ * This is a transaction fact table that captures review information for each order.
+ */
+
+INSERT INTO final.fct_order_reviews (
+    review_nk,
+    order_nk,
+    order_status,
+    review_score,
+    sentiment_score,
+    review_length_chars,
+    review_severity,
+    comment_status,
+    days_since_purchase,
+    review_date_id,
+    customer_id
+)
+SELECT 
+    oreview.review_id AS review_nk,
+    oreview.order_id AS order_nk,
+    o.order_status,
+    oreview.review_score,
+    -- Simple sentiment scoring based on review score
+    CASE 
+        WHEN oreview.review_score >= 4 THEN 1.0
+        WHEN oreview.review_score = 3 THEN 0.0
+        WHEN oreview.review_score <= 2 THEN -1.0
+        ELSE 0.0
+    END AS sentiment_score,
+    -- Review length calculation
+    COALESCE(LENGTH(oreview.review_comment_message), 0) AS review_length_chars,
+    -- Review severity based on score
+    CASE 
+        WHEN oreview.review_score <= 2 THEN 'Critical'
+        ELSE 'Standard'
+    END AS review_severity,
+    -- Comment status
+    CASE 
+        WHEN oreview.review_comment_message IS NOT NULL AND LENGTH(TRIM(oreview.review_comment_message)) > 0 
+        THEN 'Has Comment'
+        ELSE 'No Comment'
+    END AS comment_status,
+    -- Days since purchase calculation
+    CASE 
+        WHEN oreview.review_creation_date IS NOT NULL AND o.order_purchase_timestamp IS NOT NULL 
+        THEN EXTRACT(DAY FROM (TO_TIMESTAMP(oreview.review_creation_date, 'YYYY-MM-DD HH24:MI:SS') - 
+                               TO_TIMESTAMP(o.order_purchase_timestamp, 'YYYY-MM-DD HH24:MI:SS')))
+        ELSE NULL 
+    END AS days_since_purchase,
+    COALESCE(review_date_dim.date_id, -1) AS review_date_id,
+    dc.customer_id
+FROM stg.order_reviews oreview
+JOIN stg.orders o ON oreview.order_id = o.order_id
+JOIN stg.customers c ON o.customer_id = c.customer_id
+JOIN final.dim_customer dc ON c.customer_unique_id = dc.customer_nk AND dc.current_flag = 'Current'
+-- Date dimension join
+LEFT JOIN final.dim_date review_date_dim 
+    ON review_date_dim.date_actual = DATE(TO_TIMESTAMP(oreview.review_creation_date, 'YYYY-MM-DD HH24:MI:SS'))
+ON CONFLICT (review_nk, order_nk) 
+DO UPDATE SET
+    order_status = EXCLUDED.order_status,
+    review_score = EXCLUDED.review_score,
+    sentiment_score = EXCLUDED.sentiment_score,
+    review_length_chars = EXCLUDED.review_length_chars,
+    review_severity = EXCLUDED.review_severity,
+    comment_status = EXCLUDED.comment_status,
+    days_since_purchase = EXCLUDED.days_since_purchase,
+    review_date_id = EXCLUDED.review_date_id,
+    customer_id = EXCLUDED.customer_id,
+    updated_at = CURRENT_TIMESTAMP;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/luigi/worker.py", line 210, in run
+    new_deps = self._run_get_new_deps()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/luigi/worker.py", line 138, in _run_get_new_deps
+    task_gen = self.task.run()
+               ^^^^^^^^^^^^^^^
+  File "/Users/lilips/Documents/Project/pacmann/Part 6 Data Storage - Warehouse, Mart & Lake/orchestration-elt-olist-with-luigi/pipeline/transform.py", line 152, in run
+    raise Exception('Failed Transforming Tables')
+Exception: Failed Transforming Tables
+2026-04-05 21:22:07,448 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:22:07,450 - INFO - Informed scheduler that task   Transform__99914b932b   has status   FAILED
+2026-04-05 21:22:07,450 - DEBUG - Asking scheduler for work...
+2026-04-05 21:22:07,451 - DEBUG - Done
+2026-04-05 21:22:07,451 - DEBUG - There are no more tasks to run at this time
+2026-04-05 21:22:07,451 - DEBUG - There are 1 pending tasks possibly being run by other workers
+2026-04-05 21:22:07,451 - DEBUG - There are 1 pending tasks unique to this worker
+2026-04-05 21:22:07,451 - DEBUG - There are 1 pending tasks last scheduled by this worker
+2026-04-05 21:22:07,451 - INFO - Worker Worker(salt=3239593657, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=9268) was stopped. Shutting down Keep-Alive thread
+2026-04-05 21:22:07,452 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 2 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+* 1 failed:
+    - 1 Transform()
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2026-04-05 21:32:05,602 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 21:32:05,718 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 21:32:05,947 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 21:32:06,190 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 21:32:06,636 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 21:32:06,674 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 21:32:07,317 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 21:32:07,964 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 21:32:08,339 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 21:32:08,816 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 21:32:08,816 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 21:32:08,820 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 21:32:08,828 - INFO - [pid 22581] Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) done      Extract()
+2026-04-05 21:32:08,828 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:32:08,829 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 21:32:08,829 - DEBUG - Asking scheduler for work...
+2026-04-05 21:32:08,829 - DEBUG - Pending tasks: 2
+2026-04-05 21:32:08,829 - INFO - [pid 22581] Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) running   Load()
+2026-04-05 21:32:08,831 - INFO - Read Load Query - SUCCESS
+2026-04-05 21:32:09,526 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 21:32:09,526 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:32:09,658 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 21:32:09,658 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 21:32:24,850 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 21:32:32,517 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 21:32:32,525 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 21:32:32,592 - INFO - [pid 22581] Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) done      Load()
+2026-04-05 21:32:32,593 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:32:32,594 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 21:32:32,594 - DEBUG - Asking scheduler for work...
+2026-04-05 21:32:32,594 - DEBUG - Pending tasks: 1
+2026-04-05 21:32:32,594 - INFO - [pid 22581] Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) running   Transform()
+2026-04-05 21:32:32,595 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:32:32,597 - INFO - Read Transform Query - SUCCESS
+2026-04-05 21:32:32,597 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 21:32:33,922 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 21:32:34,327 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 21:32:34,371 - INFO - Transform to 'final.dim_seller' - SUCCESS
+2026-04-05 21:32:43,168 - INFO - Transform to 'final.fct_order_delivery' - SUCCESS
+2026-04-05 21:32:50,249 - INFO - Transform to 'final.fct_order_item' - SUCCESS
+2026-04-05 21:32:54,431 - INFO - Transform to 'final.fct_order_payment' - SUCCESS
+2026-04-05 21:32:57,760 - INFO - Transform to 'final.fct_order_reviews' - SUCCESS
+2026-04-05 21:32:57,763 - INFO - Transform to All Dimensions and Fact Tables - SUCCESS
+2026-04-05 21:32:57,767 - INFO - ==================================ENDING TRANSFROM DATA=======================================
+2026-04-05 21:32:57,767 - INFO - [pid 22581] Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) done      Transform()
+2026-04-05 21:32:57,768 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:32:57,769 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 21:32:57,769 - DEBUG - Asking scheduler for work...
+2026-04-05 21:32:57,769 - DEBUG - Done
+2026-04-05 21:32:57,769 - DEBUG - There are no more tasks to run at this time
+2026-04-05 21:32:57,769 - INFO - Worker Worker(salt=4136175389, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=22581) was stopped. Shutting down Keep-Alive thread
+2026-04-05 21:32:57,771 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 3 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 21:43:38,413 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 21:43:38,510 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 21:43:38,708 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 21:43:38,766 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 21:43:39,087 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 21:43:39,105 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 21:43:39,676 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 21:43:40,299 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 21:43:40,681 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 21:43:41,176 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 21:43:41,176 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 21:43:41,179 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 21:43:41,189 - INFO - [pid 24189] Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) done      Extract()
+2026-04-05 21:43:41,190 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:43:41,193 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 21:43:41,193 - DEBUG - Asking scheduler for work...
+2026-04-05 21:43:41,195 - DEBUG - Pending tasks: 2
+2026-04-05 21:43:41,195 - INFO - [pid 24189] Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) running   Load()
+2026-04-05 21:43:41,198 - INFO - Read Load Query - SUCCESS
+2026-04-05 21:43:41,866 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 21:43:41,867 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:43:41,974 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 21:43:41,974 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 21:43:56,554 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 21:44:04,196 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 21:44:04,201 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 21:44:04,259 - INFO - [pid 24189] Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) done      Load()
+2026-04-05 21:44:04,261 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:44:04,264 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 21:44:04,264 - DEBUG - Asking scheduler for work...
+2026-04-05 21:44:04,266 - DEBUG - Pending tasks: 1
+2026-04-05 21:44:04,266 - INFO - [pid 24189] Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) running   Transform()
+2026-04-05 21:44:04,268 - INFO - Connect to DWH - SUCCESS
+2026-04-05 21:44:04,269 - INFO - Read Transform Query - SUCCESS
+2026-04-05 21:44:04,269 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 21:44:04,580 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 21:44:05,163 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 21:44:05,163 - ERROR - Transform to All Dimensions and Fact Tables - FAILED
+2026-04-05 21:44:05,299 - ERROR - Transform Tables - FAILED
+2026-04-05 21:44:05,302 - ERROR - [pid 24189] Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) failed    Transform()
+Traceback (most recent call last):
+  File "/var/folders/mf/sywb84f90vn448x8rrdyhycr0000gn/T/ipykernel_24189/4061690592.py", line 92, in run
+    query = sqlalchemy.text(fct_order_query)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/sqlalchemy/sql/_elements_constructors.py", line 1644, in text
+    return TextClause(text)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 2296, in __init__
+    self.text = self._bind_params_regex.sub(repl, text)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: expected string or bytes-like object, got 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/luigi/worker.py", line 210, in run
+    new_deps = self._run_get_new_deps()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/luigi/worker.py", line 138, in _run_get_new_deps
+    task_gen = self.task.run()
+               ^^^^^^^^^^^^^^^
+  File "/var/folders/mf/sywb84f90vn448x8rrdyhycr0000gn/T/ipykernel_24189/4061690592.py", line 140, in run
+    raise Exception('Failed Transforming Tables')
+Exception: Failed Transforming Tables
+2026-04-05 21:44:05,319 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 21:44:05,328 - INFO - Informed scheduler that task   Transform__99914b932b   has status   FAILED
+2026-04-05 21:44:05,328 - DEBUG - Asking scheduler for work...
+2026-04-05 21:44:05,330 - DEBUG - Done
+2026-04-05 21:44:05,331 - DEBUG - There are no more tasks to run at this time
+2026-04-05 21:44:05,331 - DEBUG - There are 1 pending tasks possibly being run by other workers
+2026-04-05 21:44:05,331 - DEBUG - There are 1 pending tasks unique to this worker
+2026-04-05 21:44:05,332 - DEBUG - There are 1 pending tasks last scheduled by this worker
+2026-04-05 21:44:05,333 - INFO - Worker Worker(salt=1959574637, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=24189) was stopped. Shutting down Keep-Alive thread
+2026-04-05 21:44:05,339 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 2 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+* 1 failed:
+    - 1 Transform()
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:16:29,967 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 22:16:30,106 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 22:16:30,345 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 22:16:30,404 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 22:16:30,797 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 22:16:30,815 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 22:16:31,792 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 22:16:33,085 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 22:16:33,612 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 22:16:34,247 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 22:16:34,247 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 22:16:34,250 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 22:16:34,261 - INFO - [pid 97602] Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) done      Extract()
+2026-04-05 22:16:34,262 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:16:34,266 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 22:16:34,266 - DEBUG - Asking scheduler for work...
+2026-04-05 22:16:34,268 - DEBUG - Pending tasks: 2
+2026-04-05 22:16:34,269 - INFO - [pid 97602] Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) running   Load()
+2026-04-05 22:16:34,272 - INFO - Read Load Query - SUCCESS
+2026-04-05 22:16:35,125 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 22:16:35,125 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:16:35,338 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 22:16:35,338 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 22:16:50,975 - INFO - [pid 54844] Worker Worker(salt=5289259865, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=54844) done      Transform()
+2026-04-05 22:16:50,984 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:16:50,985 - INFO - Worker Worker(salt=5289259865, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=54844) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:16:50,987 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 2 tasks of which:
+* 1 complete ones were encountered:
+    - 1 Load()
+* 1 ran successfully:
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:16:56,734 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 22:17:08,151 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 22:17:08,156 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 22:17:08,212 - INFO - [pid 97602] Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) done      Load()
+2026-04-05 22:17:08,214 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:17:08,219 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 22:17:08,220 - DEBUG - Asking scheduler for work...
+2026-04-05 22:17:08,223 - DEBUG - Pending tasks: 1
+2026-04-05 22:17:08,223 - INFO - [pid 97602] Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) running   Transform()
+2026-04-05 22:17:08,225 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:17:08,226 - INFO - Read Transform Query - SUCCESS
+2026-04-05 22:17:08,226 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 22:17:08,666 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 22:17:16,237 - INFO - [pid 96011] Worker Worker(salt=6962101855, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=96011) done      Transform()
+2026-04-05 22:17:16,267 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:17:16,270 - INFO - Worker Worker(salt=6962101855, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=96011) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:17:16,273 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 2 tasks of which:
+* 1 complete ones were encountered:
+    - 1 Load()
+* 1 ran successfully:
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:17:17,047 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 22:17:17,047 - ERROR - Transform to All Dimensions and Fact Tables - FAILED
+2026-04-05 22:17:17,127 - ERROR - Transform Tables - FAILED
+2026-04-05 22:17:17,130 - ERROR - [pid 97602] Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) failed    Transform()
+Traceback (most recent call last):
+  File "/var/folders/mf/sywb84f90vn448x8rrdyhycr0000gn/T/ipykernel_97602/4061690592.py", line 92, in run
+    query = sqlalchemy.text(fct_order_query)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/sqlalchemy/sql/_elements_constructors.py", line 1644, in text
+    return TextClause(text)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 2296, in __init__
+    self.text = self._bind_params_regex.sub(repl, text)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: expected string or bytes-like object, got 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/luigi/worker.py", line 210, in run
+    new_deps = self._run_get_new_deps()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/luigi_de/lib/python3.11/site-packages/luigi/worker.py", line 138, in _run_get_new_deps
+    task_gen = self.task.run()
+               ^^^^^^^^^^^^^^^
+  File "/var/folders/mf/sywb84f90vn448x8rrdyhycr0000gn/T/ipykernel_97602/4061690592.py", line 140, in run
+    raise Exception('Failed Transforming Tables')
+Exception: Failed Transforming Tables
+2026-04-05 22:17:17,143 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:17:17,150 - INFO - Informed scheduler that task   Transform__99914b932b   has status   FAILED
+2026-04-05 22:17:17,151 - DEBUG - Asking scheduler for work...
+2026-04-05 22:17:17,165 - DEBUG - Done
+2026-04-05 22:17:17,165 - DEBUG - There are no more tasks to run at this time
+2026-04-05 22:17:17,166 - DEBUG - There are 1 pending tasks possibly being run by other workers
+2026-04-05 22:17:17,166 - DEBUG - There are 1 pending tasks unique to this worker
+2026-04-05 22:17:17,166 - DEBUG - There are 1 pending tasks last scheduled by this worker
+2026-04-05 22:17:17,167 - INFO - Worker Worker(salt=5661109349, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=97602) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:17:17,169 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 2 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+* 1 failed:
+    - 1 Transform()
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:20:50,773 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 22:20:50,838 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 22:20:51,065 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 22:20:51,119 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 22:20:51,521 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 22:20:51,541 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 22:20:52,184 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 22:20:52,841 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 22:20:53,242 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 22:20:53,763 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 22:20:53,763 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 22:20:53,764 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 22:20:53,773 - INFO - [pid 17288] Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Extract()
+2026-04-05 22:20:53,775 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:20:53,778 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 22:20:53,778 - DEBUG - Asking scheduler for work...
+2026-04-05 22:20:53,780 - DEBUG - Pending tasks: 2
+2026-04-05 22:20:53,781 - INFO - [pid 17288] Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) running   Load()
+2026-04-05 22:20:53,784 - INFO - Read Load Query - SUCCESS
+2026-04-05 22:20:54,594 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 22:20:54,595 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:20:54,772 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 22:20:54,772 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 22:21:10,148 - INFO - [pid 65223] Worker Worker(salt=2066700383, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=65223) done      Transform()
+2026-04-05 22:21:10,169 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:21:10,171 - INFO - Worker Worker(salt=2066700383, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=65223) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:21:10,176 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 2 tasks of which:
+* 1 complete ones were encountered:
+    - 1 Load()
+* 1 ran successfully:
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:21:13,673 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 22:21:25,280 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 22:21:25,300 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 22:21:25,365 - INFO - [pid 17288] Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Load()
+2026-04-05 22:21:25,371 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:21:25,376 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 22:21:25,377 - DEBUG - Asking scheduler for work...
+2026-04-05 22:21:25,379 - DEBUG - Pending tasks: 1
+2026-04-05 22:21:25,379 - INFO - [pid 17288] Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) running   Transform()
+2026-04-05 22:21:25,381 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:21:25,383 - INFO - Read Transform Query - SUCCESS
+2026-04-05 22:21:25,383 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 22:21:25,864 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 22:21:35,987 - INFO - [pid 63135] Worker Worker(salt=6604641371, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=63135) done      Transform()
+2026-04-05 22:21:35,998 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:21:35,998 - INFO - Worker Worker(salt=6604641371, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=63135) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:21:36,000 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 2 tasks of which:
+* 1 complete ones were encountered:
+    - 1 Load()
+* 1 ran successfully:
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:21:37,504 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 22:21:37,577 - INFO - Transform to 'final.dim_seller' - SUCCESS
+2026-04-05 22:21:45,846 - INFO - Transform to 'final.fct_order_delivery' - SUCCESS
+2026-04-05 22:21:51,042 - INFO - Transform to 'final.fct_order_item' - SUCCESS
+2026-04-05 22:21:55,893 - INFO - Transform to 'final.fct_order_payment' - SUCCESS
+2026-04-05 22:22:01,253 - INFO - Transform to 'final.fct_order_reviews' - SUCCESS
+2026-04-05 22:22:01,257 - INFO - Transform to All Dimensions and Fact Tables - SUCCESS
+2026-04-05 22:22:01,266 - INFO - ==================================ENDING TRANSFROM DATA=======================================
+2026-04-05 22:22:01,268 - INFO - [pid 17288] Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Transform()
+2026-04-05 22:22:01,274 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:22:01,281 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:22:01,284 - DEBUG - Asking scheduler for work...
+2026-04-05 22:22:01,289 - DEBUG - Done
+2026-04-05 22:22:01,290 - DEBUG - There are no more tasks to run at this time
+2026-04-05 22:22:01,291 - INFO - Worker Worker(salt=5158909728, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:22:01,295 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 3 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2026-04-05 22:35:47,488 - INFO - logging already configured
+2026-04-05 22:35:47,496 - DEBUG - Checking if Extract() is complete
+2026-04-05 22:35:47,524 - INFO - Informed scheduler that task   Extract__99914b932b   has status   PENDING
+2026-04-05 22:35:47,524 - DEBUG - Checking if Load() is complete
+2026-04-05 22:35:47,527 - DEBUG - Checking if Extract() is complete
+2026-04-05 22:35:47,530 - INFO - Informed scheduler that task   Load__99914b932b   has status   PENDING
+2026-04-05 22:35:47,533 - INFO - Informed scheduler that task   Extract__99914b932b   has status   PENDING
+2026-04-05 22:35:47,533 - DEBUG - Checking if Transform() is complete
+2026-04-05 22:35:47,534 - DEBUG - Checking if Load() is complete
+2026-04-05 22:35:47,537 - INFO - Informed scheduler that task   Transform__99914b932b   has status   PENDING
+2026-04-05 22:35:47,537 - DEBUG - Checking if Extract() is complete
+2026-04-05 22:35:47,540 - INFO - Informed scheduler that task   Load__99914b932b   has status   PENDING
+2026-04-05 22:35:47,542 - INFO - Informed scheduler that task   Extract__99914b932b   has status   PENDING
+2026-04-05 22:35:47,542 - INFO - Done scheduling tasks
+2026-04-05 22:35:47,542 - INFO - Running Worker with 1 processes
+2026-04-05 22:35:47,548 - DEBUG - Asking scheduler for work...
+2026-04-05 22:35:47,551 - DEBUG - Pending tasks: 3
+2026-04-05 22:35:47,551 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) running   Extract()
+2026-04-05 22:35:47,566 - INFO - ==================================STARTING EXTRACT DATA=======================================
+2026-04-05 22:35:47,673 - INFO - EXTRACT 'public.product_category_name_translation' - SUCCESS.
+2026-04-05 22:35:48,182 - INFO - EXTRACT 'public.products' - SUCCESS.
+2026-04-05 22:35:48,254 - INFO - EXTRACT 'public.geolocation' - SUCCESS.
+2026-04-05 22:35:48,818 - INFO - EXTRACT 'public.customers' - SUCCESS.
+2026-04-05 22:35:48,838 - INFO - EXTRACT 'public.sellers' - SUCCESS.
+2026-04-05 22:35:49,481 - INFO - EXTRACT 'public.orders' - SUCCESS.
+2026-04-05 22:35:50,117 - INFO - EXTRACT 'public.order_items' - SUCCESS.
+2026-04-05 22:35:50,571 - INFO - EXTRACT 'public.order_payments' - SUCCESS.
+2026-04-05 22:35:51,159 - INFO - EXTRACT 'public.order_reviews' - SUCCESS.
+2026-04-05 22:35:51,160 - INFO - Extract All Tables From Sources - SUCCESS
+2026-04-05 22:35:51,170 - INFO - ==================================ENDING EXTRACT DATA=======================================
+2026-04-05 22:35:51,179 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Extract()
+2026-04-05 22:35:51,181 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:35:51,187 - INFO - Informed scheduler that task   Extract__99914b932b   has status   DONE
+2026-04-05 22:35:51,187 - DEBUG - Asking scheduler for work...
+2026-04-05 22:35:51,189 - DEBUG - Pending tasks: 2
+2026-04-05 22:35:51,190 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) running   Load()
+2026-04-05 22:35:51,193 - INFO - Read Load Query - SUCCESS
+2026-04-05 22:35:52,000 - INFO - Read Extracted Data - SUCCESS
+2026-04-05 22:35:52,006 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:35:52,236 - INFO - Truncate public Schema in DWH - SUCCESS
+2026-04-05 22:35:52,243 - INFO - ==================================STARTING LOAD DATA=======================================
+2026-04-05 22:36:08,760 - INFO - LOAD All Tables To DWH-Olist - SUCCESS
+2026-04-05 22:36:20,766 - INFO - LOAD All Tables To DWH-Staging - SUCCESS
+2026-04-05 22:36:20,778 - INFO - ==================================ENDING LOAD DATA=======================================
+2026-04-05 22:36:20,849 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Load()
+2026-04-05 22:36:20,851 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:36:20,854 - INFO - Informed scheduler that task   Load__99914b932b   has status   DONE
+2026-04-05 22:36:20,855 - DEBUG - Asking scheduler for work...
+2026-04-05 22:36:20,858 - DEBUG - Pending tasks: 1
+2026-04-05 22:36:20,858 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) running   Transform()
+2026-04-05 22:36:20,859 - INFO - Connect to DWH - SUCCESS
+2026-04-05 22:36:20,860 - INFO - Read Transform Query - SUCCESS
+2026-04-05 22:36:20,860 - INFO - ==================================STARTING TRANSFROM DATA=======================================
+2026-04-05 22:36:23,031 - INFO - Transform to 'final.dim_customer' - SUCCESS
+2026-04-05 22:36:23,714 - INFO - Transform to 'final.dim_product' - SUCCESS
+2026-04-05 22:36:23,742 - INFO - Transform to 'final.dim_seller' - SUCCESS
+2026-04-05 22:36:30,648 - INFO - Transform to 'final.fct_order_delivery' - SUCCESS
+2026-04-05 22:36:35,066 - INFO - Transform to 'final.fct_order_item' - SUCCESS
+2026-04-05 22:36:38,305 - INFO - Transform to 'final.fct_order_payment' - SUCCESS
+2026-04-05 22:36:41,934 - INFO - Transform to 'final.fct_order_reviews' - SUCCESS
+2026-04-05 22:36:41,938 - INFO - Transform to All Dimensions and Fact Tables - SUCCESS
+2026-04-05 22:36:41,950 - INFO - ==================================ENDING TRANSFROM DATA=======================================
+2026-04-05 22:36:41,950 - INFO - [pid 17288] Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) done      Transform()
+2026-04-05 22:36:41,953 - DEBUG - 1 running tasks, waiting for next task to finish
+2026-04-05 22:36:41,958 - INFO - Informed scheduler that task   Transform__99914b932b   has status   DONE
+2026-04-05 22:36:41,958 - DEBUG - Asking scheduler for work...
+2026-04-05 22:36:41,960 - DEBUG - Done
+2026-04-05 22:36:41,961 - DEBUG - There are no more tasks to run at this time
+2026-04-05 22:36:41,962 - INFO - Worker Worker(salt=2374740708, workers=1, host=lilips-MacBook-Pro.local, username=lilips, pid=17288) was stopped. Shutting down Keep-Alive thread
+2026-04-05 22:36:41,969 - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 3 tasks of which:
+* 3 ran successfully:
+    - 1 Extract()
+    - 1 Load()
+    - 1 Transform()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
