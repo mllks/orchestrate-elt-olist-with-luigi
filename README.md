@@ -24,7 +24,7 @@ The pipeline executes the following stages sequentially:
 ![Architecture and workflow](images/Olist%20Data%20Warehouse.drawio.png)
 
  <center>
-    <img src="https://sekolahdata-assets.s3.ap-southeast-1.amazonaws.com/notebook-images/mde-data-storage/09-21.png"/>
+    <img src="./images/09-21.png"/>
     </center>
 
 ---
